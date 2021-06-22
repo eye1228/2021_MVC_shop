@@ -1,38 +1,22 @@
 package com.ict.db;
 
 public class VO {
-	private String idx, category, p_num, p_name, p_company,p_image_s, p_image_l, p_content, p_date, id, pwd;
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getPwd() {
-		return pwd;
-	}
-
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
-
+	private String idx, category, p_num, p_name, p_company,p_image_s, p_image_l, p_content, p_date;
 	private int p_price, p_saleprice;
 	
-	// º°µµ Ãß°¡ (Àå¹Ù±¸´Ï³»¿ë => ¿ø·¡´Â DB¿¡ ±¸Çö )
+	// ë³„ë„ ì¶”ê°€ (ìž¥ë°”êµ¬ë‹ˆë‚´ìš© => ì›ëž˜ëŠ” DBì— êµ¬í˜„ )
 	private int quant, totalPrice ;
 	
-	// ¼¼ÀÏ °¡°ÝÀ¸·Î ¼¼ÀÏ ÆÛ¼¾Æ® °è»ê (ÇÒÀÎ·ü)
+	// ì„¸ì¼ ê°€ê²©ìœ¼ë¡œ ì„¸ì¼ í¼ì„¼íŠ¸ ê³„ì‚° (í• ì¸ë¥ )
 	public int getPercent() {
 		float per = (p_price - p_saleprice) * 100 / p_price;
 		return (int)per ;
 	}
 	
-	// Àå¹Ù±¸´Ï¿¡¼­ ¼ö·®ÀÌ º¯°æµÇ¸é Àå¹Ù±¸´Ï ÃÑ ±Ý¾×µµ º¯°æµÇ¾î¾ß ÇÑ´Ù.
+	// ìž¥ë°”êµ¬ë‹ˆì—ì„œ ìˆ˜ëŸ‰ì´ ë³€ê²½ë˜ë©´ ìž¥ë°”êµ¬ë‹ˆ ì´ ê¸ˆì•¡ë„ ë³€ê²½ë˜ì–´ì•¼ í•œë‹¤.
 	public void setQuant(int quant) {
 		this.quant = quant;
-		// ÁÖÀÇ) ³ªÁß¿¡ ÇÒÀÎÁ¦Ç°°ú ¾Æ´Ï Á¦Ç°À» ±¸º°ÇØ¼­ °è»ê ÇØ¾ß µÈ´Ù.
+		// ì£¼ì˜) ë‚˜ì¤‘ì— í• ì¸ì œí’ˆê³¼ ì•„ë‹ˆ ì œí’ˆì„ êµ¬ë³„í•´ì„œ ê³„ì‚° í•´ì•¼ ëœë‹¤.
 		setTotalPrice(quant * p_saleprice);
 	}
 

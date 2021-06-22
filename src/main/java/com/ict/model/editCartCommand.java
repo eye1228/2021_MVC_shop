@@ -3,16 +3,28 @@ package com.ict.model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class editCartCommand implements Command {
+import com.ict.db.CVO;
+import com.ict.db.DAO;
 
+public class editCartCommand implements Command{
 	@Override
 	public String exec(HttpServletRequest request, HttpServletResponse response) {
 		int su = Integer.parseInt(request.getParameter("su"));
 		String idx = request.getParameter("idx");
+		String m_idx = request.getParameter("m_idx");
 		
-		Cart.setQuant(idx, su);
+		CVO cvo = new CVO();
 		
-		return "MyController?cmd=showCart";
+		cvo.setP_idx(Integer.parseInt(idx));
+		cvo.setM_idx(Integer.parseInt(m_idx));
+		cvo.setQuant(su);
+		
+		System.out.println(idx);
+		System.out.println(m_idx);
+		System.out.println(su);
+		System.out.println("----------------");
+		
+		DAO.getCart_update(cvo);
+		return "MyController?cmd=showCart&m_idx=" + m_idx;
 	}
-
 }

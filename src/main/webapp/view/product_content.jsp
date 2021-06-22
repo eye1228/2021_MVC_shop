@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
@@ -28,7 +29,7 @@ table, th, td {
 <script type="text/javascript">
 	function add_cart() {
 		if(${login=='ok'}){
-			location.href="/MyController?cmd=addCart&idx=${vo.idx}";
+			location.href="/MyController?cmd=addCart&idx=${vo.idx}&m_idx=${mvo.idx}";
 		}else{
 			alert("로그인 하세요");
 			location.href="/MyController?cmd=login";
@@ -36,7 +37,7 @@ table, th, td {
 	}
 	function show_cart() {
 		if(${login=='ok'}){
-			location.href="/MyController?cmd=showCart";
+			location.href="/MyController?cmd=showCart&m_idx=${mvo.idx}";
 		}else{
 			alert("로그인 하세요");
 			location.href="/MyController?cmd=login";
@@ -49,6 +50,11 @@ table, th, td {
 	<%@ include file="top.jsp"%>
 	<hr>
 	<table>
+		<c:choose>
+		  		<c:when test="${login=='ok' }">
+		  			${cvo.idx }님
+		  		</c:when>
+		</c:choose>
 		<tr>
 			<th class="bg">제품Category</th>
 			<td>${vo.category }</td>
@@ -67,9 +73,8 @@ table, th, td {
 		</tr>
 		<tr>
 			<th class="bg">제품가격</th>
-			<td>시중가 : <fmt:formatNumber value="${vo.p_price }"
-					pattern="#,###" />원 <font style="color: tomato">(할인가:<fmt:formatNumber
-						value="${vo.p_saleprice}" pattern="#,###" />원 )
+			<td>시중가 : <fmt:formatNumber value="${vo.p_price }"	pattern="#,###" />원 
+			<font style="color: tomato">(할인가:<fmt:formatNumber	value="${vo.p_saleprice}" pattern="#,###" />원 )
 			</font></td>
 		</tr>
 		<tr>
@@ -81,9 +86,10 @@ table, th, td {
 				src="/images/${vo.p_image_l}" style="width: 350px;"></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center"><input type="button"
-				value="장바구니에 담기" onclick="add_cart()" /> <input type="button"
-				value="장바구니 보기" onclick="show_cart()" /></td>
+			<td colspan="2" align="center">
+				<input type="button" value="장바구니에 담기" onclick="add_cart()" /> 
+				<input type="button" value="장바구니 보기" onclick="show_cart()" />
+			</td>
 		</tr>
 	</table>
 </body>

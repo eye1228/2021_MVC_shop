@@ -1,7 +1,7 @@
 package com.ict.db;
 
 public class MVO {
-	private String idx, id, pw, name, age, addr, reg;
+	private String idx, id, pw, name, age, addr, reg ;
 
 	public String getIdx() {
 		return idx;
@@ -58,5 +58,5 @@ public class MVO {
 	public void setReg(String reg) {
 		this.reg = reg;
 	}
-
+	
 }

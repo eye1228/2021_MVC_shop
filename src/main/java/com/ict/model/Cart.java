@@ -8,13 +8,13 @@ import com.ict.db.DAO;
 import com.ict.db.VO;
 
 public class Cart {
-	static List<VO> cartList ;  // Ä«Æ®¿¡ ´ã°ÜÁú Á¦Ç° ¸®½ºÆ®
-	static int total;           // Ä«Æ® ÀüÃ¼ ±İ¾×
+	static List<VO> cartList ;  // ì¹´íŠ¸ì— ë‹´ê²¨ì§ˆ ì œí’ˆ ë¦¬ìŠ¤íŠ¸
+	static int total;           // ì¹´íŠ¸ ì „ì²´ ê¸ˆì•¡
 	static {
 		cartList = new ArrayList<VO>();
 	}
 	
-	// Ä«Æ®¿¡ ÇØ´ç Á¦Ç°ÀÌ ÀÖ´ÂÁö ¾ø´ÂÁö °Ë»çÇÏ´Â ¸Ş¼Òµå 
+	// ì¹´íŠ¸ì— í•´ë‹¹ ì œí’ˆì´ ìˆëŠ”ì§€ ì—†ëŠ”ì§€ ê²€ì‚¬í•˜ëŠ” ë©”ì†Œë“œ 
 	public static VO findProduct(String idx) {
 		VO cvo = null;
 		Iterator<VO> it = cartList.iterator();
@@ -28,25 +28,25 @@ public class Cart {
 		return cvo;
 	}
 	
-	// Ä«Æ®¿¡ Á¦Ç°À» ´ã´Â ¸Ş¼Òµå
-	// Ä«Æ®¿¡ ´ãÀ» Á¦Ç°ÀÌ ÇöÀç Ä«Æ®¿¡ Á¸ÀçÇÏ¸é ¼ö·®¸¸ Áõ°¡
-	// Ä«Æ®¿¡ ´ãÀ» Á¦Ç°ÀÌ ÇöÀç Ä«Æ®¿¡ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é Ä«Æ®¿¡ Ãß°¡
+	// ì¹´íŠ¸ì— ì œí’ˆì„ ë‹´ëŠ” ë©”ì†Œë“œ
+	// ì¹´íŠ¸ì— ë‹´ì„ ì œí’ˆì´ í˜„ì¬ ì¹´íŠ¸ì— ì¡´ì¬í•˜ë©´ ìˆ˜ëŸ‰ë§Œ ì¦ê°€
+	// ì¹´íŠ¸ì— ë‹´ì„ ì œí’ˆì´ í˜„ì¬ ì¹´íŠ¸ì— ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´ ì¹´íŠ¸ì— ì¶”ê°€
 	public static void addProduct(String idx) {
 		VO vo = findProduct(idx);
 		if(vo == null) {
-			// ÇöÀç Ä«Æ®¿¡ Á¦Ç°ÀÌ ¾ø´Ù´Â ¶æ(Ä«µå¿¡ Á¦Ç°À» ´ã´Â´Ù.)
+			// í˜„ì¬ ì¹´íŠ¸ì— ì œí’ˆì´ ì—†ë‹¤ëŠ” ëœ»(ì¹´ë“œì— ì œí’ˆì„ ë‹´ëŠ”ë‹¤.)
 			vo = DAO.getOneList(idx);
-			vo.setQuant(1);    // Ä«µå¿¡ Á¸ÀçÇÏ´Â Á¦Ç°ÀÇ ¼ö·®
+			vo.setQuant(1);    // ì¹´ë“œì— ì¡´ì¬í•˜ëŠ” ì œí’ˆì˜ ìˆ˜ëŸ‰
 			cartList.add(vo);
 		}else {
-			// Ä«Æ®¿¡ Á¸ÀçÇÏ´Â Á¦Ç°ÀÇ ¼ö·®À» ²¨³»¼­ 1Áõ°¡ ½ÃÅ²´Ù.
+			// ì¹´íŠ¸ì— ì¡´ì¬í•˜ëŠ” ì œí’ˆì˜ ìˆ˜ëŸ‰ì„ êº¼ë‚´ì„œ 1ì¦ê°€ ì‹œí‚¨ë‹¤.
 			vo.setQuant(vo.getQuant()+1);
 		}
-		// ÇÒÀÎÁ¦Ç°°ú ¾Æ´Ñ Á¦Ç°À» ±¸º°ÇØ¾ß µÈ´Ù.
+		// í• ì¸ì œí’ˆê³¼ ì•„ë‹Œ ì œí’ˆì„ êµ¬ë³„í•´ì•¼ ëœë‹¤.
 		total = total + vo.getP_saleprice();
 	}
 	
-	// Ä«Æ®º¸±â¿¡¼­ Ä«Æ®¿¡ ¼ö·®À» º¯°æÇÏ´Â ¸Ş¼Òµå
+	// ì¹´íŠ¸ë³´ê¸°ì—ì„œ ì¹´íŠ¸ì— ìˆ˜ëŸ‰ì„ ë³€ê²½í•˜ëŠ” ë©”ì†Œë“œ
     public static void setQuant(String idx, int su) {
     	VO vo = findProduct(idx);
     	total = total - vo.getTotalPrice();
@@ -55,7 +55,7 @@ public class Cart {
     	total = total +vo.getTotalPrice();
     }
 	
-	// Ä«Æ®º¸±â¿¡¼­ Ä«Æ®¿¡¼­ Á¦Ç°À» »èÁ¦ÇÏ´Â ¸Ş¼Òµå
+	// ì¹´íŠ¸ë³´ê¸°ì—ì„œ ì¹´íŠ¸ì—ì„œ ì œí’ˆì„ ì‚­ì œí•˜ëŠ” ë©”ì†Œë“œ
 	public static void setDelete(String idx) {
 		VO vo = findProduct(idx);
 		cartList.remove(vo);

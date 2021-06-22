@@ -1,7 +1,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
@@ -55,13 +55,13 @@ input{
 		</thead>
 		<tbody>
 			<c:choose>
-				<c:when test="${empty cartList }">
+				<c:when test="${empty list }">
 					<tr>
 						<td colspan="6"><h2>장바구니가 비었습니다</h2></td>
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="k" items="${cartList }">
+					<c:forEach var="k" items="${list }">
 					<tr>
 						<td>${k.p_num }</td>
 						<td>${k.p_name }</td>
@@ -72,6 +72,7 @@ input{
 							<form method="post">
 								<input type="number" name="su" value="${k.quant}" >
 								<input type="hidden" name="idx" value="${k.idx}">
+								<input type="hidden" name="m_idx" value="${m_idx}">
 								<input type="button" value="수정" onclick="edit_cart(this.form)">
 							</form>
 						</td>
@@ -79,6 +80,7 @@ input{
 						<td>
 							<form method="post">
 								<input type="hidden" name="idx" value="${k.idx}">
+								<input type="hidden" name="m_idx" value="${m_idx}">
 								<input type="button" value="삭제" onclick="delete_cart(this.form)">
 							</form>
 						</td>

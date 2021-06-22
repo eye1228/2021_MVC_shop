@@ -8,15 +8,14 @@ import com.ict.db.VO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-public class Product_addCommand implements Command {
-
+public class Product_addCommand implements Command{
 	@Override
 	public String exec(HttpServletRequest request, HttpServletResponse response) {
-		
 		try {
 			String path = request.getServletContext().getRealPath("/images");
-			MultipartRequest mr = new MultipartRequest(request, path, 100*1024*1024, "utf-8", new DefaultFileRenamePolicy());
 			
+			MultipartRequest mr = 
+				new MultipartRequest(request, path,100*1024*1024,"utf-8", new DefaultFileRenamePolicy());
 			VO vo = new VO();
 			
 			vo.setCategory(mr.getParameter("category"));
@@ -30,16 +29,11 @@ public class Product_addCommand implements Command {
 			vo.setP_content(mr.getParameter("p_content"));
 			
 			int result = DAO.getProductInsert(vo);
-			
-			System.out.println(vo);
-			
-			return "/MyController?cmd=list&category=" + vo.getCategory();
-		
+			if(result>0) {
+				return "MyController?cmd=list&category="+vo.getCategory();
+			}
 		} catch (Exception e) {
-			System.out.println(e);
 		}
-		
 		return null;
 	}
-
 }
