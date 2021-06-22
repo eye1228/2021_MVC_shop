@@ -1,7 +1,40 @@
 package com.ict.db;
 
 public class VO {
-	private String idx, category, p_num, p_name, p_company, p_image_s, p_image_l, p_content, p_date; 
+	private String idx, category, p_num, p_name, p_company,p_image_s, p_image_l, p_content, p_date, id, pwd;
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	private int p_price, p_saleprice;
+	
+	// 별도 추가 (장바구니내용 => 원래는 DB에 구현 )
+	private int quant, totalPrice ;
+	
+	// 세일 가격으로 세일 퍼센트 계산 (할인률)
+	public int getPercent() {
+		float per = (p_price - p_saleprice) * 100 / p_price;
+		return (int)per ;
+	}
+	
+	// 장바구니에서 수량이 변경되면 장바구니 총 금액도 변경되어야 한다.
+	public void setQuant(int quant) {
+		this.quant = quant;
+		// 주의) 나중에 할인제품과 아니 제품을 구별해서 계산 해야 된다.
+		setTotalPrice(quant * p_saleprice);
+	}
 
 	public String getIdx() {
 		return idx;
@@ -95,9 +128,6 @@ public class VO {
 		return quant;
 	}
 
-	public void setQuant(int quant) {
-		this.quant = quant;
-	}
 
 	public int getTotalPrice() {
 		return totalPrice;
@@ -106,15 +136,6 @@ public class VO {
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-
-	private int p_price, p_saleprice;
 	
-	//별도 추가(장바구니 내용 => 원래는 db에 구현. 우리 시킨다고한다.)
-	private int quant, totalPrice;
 	
-	//세일 가격으로 세일 퍼ㅅ네트 사용
-	public int getPercent() {
-		float per = (p_price - p_saleprice) * 100 / p_price;
-		return (int)per;
-	}
 }
